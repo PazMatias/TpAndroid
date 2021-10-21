@@ -4,16 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".PatternActivity">
 
-    <com.andrognito.patternlockview.PatternLockView
-        android:id="@+id/pattern_lock_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/background_dark"
-        app:correctStateColor="@color/colorCorrectLine"
-        app:normalStateColor="@color/colorNormalLine"
-        app:wrongStateColor="@color/colorWrongLine"/>
 
 <!--    <com.google.android.material.appbar.AppBarLayout-->
 <!--        android:layout_width="match_parent"-->
@@ -51,7 +43,15 @@
 <!--        android:layout_marginBottom="16dp"-->
 <!--        app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
-
+    <com.andrognito.patternlockview.PatternLockView
+        android:id="@+id/pattern_lock_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_dark"
+        app:correctStateColor="@color/colorCorrectLine"
+        app:normalStateColor="@color/colorNormalLine"
+        app:wrongStateColor="@color/colorWrongLine"
+        tools:ignore="MissingConstraints" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

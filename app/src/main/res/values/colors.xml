@@ -13,4 +13,8 @@
     <color name="colorCorrectLine">#008000</color>
     <color name="colorNormalLine">#FFFF</color>
     <color name="colorWrongLine">#FF0000</color>
+    <color name="orange">#E26A2C</color>
+    <color name="darkGreen">#E2C275</color>
+    <color name="registerColor">#99A799</color>
+
 </resources>

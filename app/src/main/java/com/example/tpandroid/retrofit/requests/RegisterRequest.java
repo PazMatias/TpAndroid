@@ -1,9 +1,9 @@
-package com.example.tpandroid.retrofit;
+package com.example.tpandroid.retrofit.requests;
 
 
 import com.google.gson.annotations.SerializedName;
 
-public class SoaRequest {
+public class RegisterRequest {
     @SerializedName("env")
     private String env;
     @SerializedName("name")

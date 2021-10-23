@@ -55,7 +55,7 @@ public class PatternActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
-                    Toast.makeText(PatternActivity.this, "Incorrect password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PatternActivity.this, "Patron incorrecto", Toast.LENGTH_LONG).show();
                 }
             }
 

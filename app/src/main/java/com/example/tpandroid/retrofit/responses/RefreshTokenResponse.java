@@ -1,9 +1,7 @@
-package com.example.tpandroid.retrofit;
+package com.example.tpandroid.retrofit.responses;
 
-public class SoaResponse {
-
+public class RefreshTokenResponse {
     private Boolean success;
-    private String  env;
     private String  token;
     private String  token_refresh;
 
@@ -13,14 +11,6 @@ public class SoaResponse {
 
     public void setSuccess(Boolean success) {
         this.success = success;
-    }
-
-    public String getEnv() {
-        return env;
-    }
-
-    public void setEnv(String env) {
-        this.env = env;
     }
 
     public String getToken() {

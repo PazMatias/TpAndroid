@@ -10,8 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
-import com.example.tpandroid.retrofit.SoaRequest;
-import com.example.tpandroid.retrofit.SoaResponse;
+import com.example.tpandroid.helpers.ConnectionHelper;
+import com.example.tpandroid.retrofit.requests.RegisterRequest;
+import com.example.tpandroid.retrofit.responses.RegisterResponse;
 import com.example.tpandroid.services.SoaService;
 
 import retrofit2.Call;
@@ -47,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        SoaRequest request = new SoaRequest();
+        RegisterRequest request = new RegisterRequest();
 
         request.setEnv("TEST");
         request.setName(nombreTextInput.getText().toString());
@@ -64,10 +65,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .build();
         SoaService soaService = retrofit.create(SoaService.class);
 
-        Call<SoaResponse> call = soaService.register(request);
-        call.enqueue(new Callback<SoaResponse>() {
+        Call<RegisterResponse> call = soaService.register(request);
+        call.enqueue(new Callback<RegisterResponse>() {
             @Override
-            public void onResponse(Call<SoaResponse> call, Response<SoaResponse> response) {
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
 
                 if (response.isSuccessful()){
 
@@ -76,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<SoaResponse> call, Throwable t) {
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
 
                 Toast.makeText(RegisterActivity.this, "CACHAPUM", Toast.LENGTH_LONG).show();
                 Log.e(TAG,t.getMessage());

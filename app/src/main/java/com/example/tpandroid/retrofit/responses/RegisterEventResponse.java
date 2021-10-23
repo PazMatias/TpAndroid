@@ -3,6 +3,7 @@ package com.example.tpandroid.retrofit.responses;
 public class RegisterEventResponse {
     private Boolean success;
     private String  env;
+    private EventResponse  event;
 
     public Boolean getSuccess() {
         return success;
@@ -18,5 +19,9 @@ public class RegisterEventResponse {
 
     public void setEnv(String env) {
         this.env = env;
+    }
+
+    public EventResponse getData() {
+        return event;
     }
 }

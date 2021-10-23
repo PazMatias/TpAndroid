@@ -14,7 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tpandroid.databinding.ActivityMainBinding;
-import com.example.tpandroid.ui.main.LoginActivity;
+import com.example.tpandroid.Views.LoginActivity;
 
 import java.util.List;
 

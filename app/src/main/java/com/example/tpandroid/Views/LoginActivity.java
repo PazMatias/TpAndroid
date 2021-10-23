@@ -1,4 +1,4 @@
-package com.example.tpandroid.ui.main;
+package com.example.tpandroid.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.tpandroid.PatternActivity;
 import com.example.tpandroid.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {

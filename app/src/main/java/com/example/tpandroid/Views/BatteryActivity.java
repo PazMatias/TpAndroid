@@ -10,7 +10,7 @@ import android.os.Handler;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.tpandroid.PatternActivity;
+import com.example.tpandroid.Views.PatternActivity;
 import com.example.tpandroid.R;
 
 import java.text.DecimalFormat;
@@ -42,5 +42,11 @@ public class BatteryActivity extends AppCompatActivity {
     private void afterWait() {
         Intent intent = new Intent(BatteryActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        super.finish();
     }
 }

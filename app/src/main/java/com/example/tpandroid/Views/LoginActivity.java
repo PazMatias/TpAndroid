@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -11,14 +12,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.interfaces.LoginInterface;
+import com.example.tpandroid.interfaces.RegisterInterface;
+import com.example.tpandroid.presenters.LoginPresenter;
+import com.example.tpandroid.retrofit.requests.LoginRequest;
+import com.example.tpandroid.retrofit.responses.LoginResponse;
+import com.example.tpandroid.retrofit.responses.RegisterResponse;
+
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginInterface.View {
 
     EditText emailTextInput;
     EditText passwordTextInput;
     Button loginButton;
     Button registerButton;
+    private static String TAG = RegisterActivity.class.getName();
+    private LoginInterface.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailTextInput = findViewById(R.id.editTextLoginEmail);
         passwordTextInput = findViewById(R.id.editTextLoginPassword);
 
+        presenter = new LoginPresenter(this);
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
 
@@ -84,7 +96,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void showResult(LoginResponse result) {
+        if (result.getSuccess()) {
+            Toast.makeText(LoginActivity.this, "Logeo Exitoso!", Toast.LENGTH_LONG).show();
+            Log.i(TAG, "Logeo Exitoso!");
+            // Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+            // startActivity(intent);
+        } else {
+            Toast.makeText(LoginActivity.this,result.getMsg() , Toast.LENGTH_LONG).show();
+
+        }
     }
+
+
 }

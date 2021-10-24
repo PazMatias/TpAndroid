@@ -2,11 +2,13 @@ package com.example.tpandroid.models;
 
 import static androidx.core.content.res.TypedArrayUtils.getString;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
 import com.example.tpandroid.Views.RegisterActivity;
+import com.example.tpandroid.helpers.ConnectionHelper;
 import com.example.tpandroid.interfaces.RegisterInterface;
 import com.example.tpandroid.retrofit.requests.RegisterRequest;
 import com.example.tpandroid.retrofit.responses.RegisterResponse;
@@ -31,7 +33,9 @@ public class RegisterModel implements RegisterInterface.Model {
 
 
     @Override
-    public void register(RegisterRequest request, String uri) {
+    public void register(RegisterRequest request, String uri, Context context) {
+
+        if (ConnectionHelper.isOnline(context)){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
@@ -44,8 +48,7 @@ public class RegisterModel implements RegisterInterface.Model {
             @Override
 
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                Log.e(TAG,response.message());
-                Log.e(TAG,response.body().getEnv());
+
                 responseModel.setEnv(response.body().getEnv());
                 responseModel.setToken(response.body().getToken());
                 responseModel.setToken_refresh(response.body().getToken_refresh());
@@ -58,16 +61,24 @@ public class RegisterModel implements RegisterInterface.Model {
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
 
 
-                RegisterResponse responseModel = null;
                 responseModel.setSuccess(false);
                 responseModel.setEnv(request.getEnv());
-                responseModel.setMsg(t.getMessage());
+                responseModel.setMsg("Registro Fallido");
 
                 Log.e(TAG,t.getMessage());
                 presenter.showResult(responseModel);
 
             }
         });
+
+        }
+        else{
+            responseModel.setSuccess(false);
+            responseModel.setEnv(request.getEnv());
+            responseModel.setMsg("No se cuenta con conexion a internet");
+
+            presenter.showResult(responseModel);
+        }
 
     }
 }

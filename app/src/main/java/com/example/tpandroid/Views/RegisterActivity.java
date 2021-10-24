@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.helpers.ConnectionHelper;
 import com.example.tpandroid.interfaces.RegisterInterface;
 import com.example.tpandroid.presenters.RegisterPresenter;
 import com.example.tpandroid.retrofit.requests.RegisterRequest;
@@ -55,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         RegisterRequest request = getRegisterRequest();
         if (request != null)
-            presenter.register(request, getString(R.string.url_register_api));
+            presenter.register(request, getString(R.string.url_register_api),this);
     }
 
     @NonNull
@@ -86,8 +87,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
-                Toast.makeText(RegisterActivity.this, "Registro Fallido!", Toast.LENGTH_LONG).show();
-                Log.e(TAG, result.getMsg());
+                Toast.makeText(RegisterActivity.this,result.getMsg() , Toast.LENGTH_LONG).show();
 
             }
         }

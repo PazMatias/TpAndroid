@@ -1,5 +1,6 @@
 package com.example.tpandroid.presenters;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,8 +35,8 @@ public class RegisterPresenter implements RegisterInterface.Presenter {
     }
 
     @Override
-    public void register(RegisterRequest request, String uri) {
+    public void register(RegisterRequest request, String uri, Context context) {
         if (model != null)
-            model.register(request, uri);
+            model.register(request, uri,context);
     }
 }

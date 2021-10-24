@@ -67,7 +67,7 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="Dni"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/emailTextInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"

@@ -21,7 +21,6 @@ public interface SoaService {
     @Headers({"content-type: application/json"})
     @POST("api/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
-
     @Headers({"content-type: application/json"})
     @POST("api/login")
     Call<LoginResponse> login(@Body LoginRequest request);

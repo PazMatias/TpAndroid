@@ -17,12 +17,14 @@ import retrofit2.http.PUT;
 
 public interface SoaService {
 
+
     @Headers({"content-type: application/json"})
     @POST("api/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
+
     @Headers({"content-type: application/json"})
     @POST("api/login")
-    Call<LoginResponse> login(@Header("Authorization") String authToken, @Body LoginRequest request);
+    Call<LoginResponse> login(@Body LoginRequest request);
     @Headers({"content-type: application/json"})
     @PUT("api/refresh")
     Call<RefreshTokenResponse> refreshToken(@Header("Authorization") String authToken);

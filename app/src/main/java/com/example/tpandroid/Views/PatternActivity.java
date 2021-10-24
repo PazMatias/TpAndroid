@@ -1,4 +1,4 @@
-package com.example.tpandroid;
+package com.example.tpandroid.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tpandroid.R;
 import com.example.tpandroid.databinding.ActivityMainBinding;
-import com.example.tpandroid.Views.LoginActivity;
 
 import java.util.List;
 
@@ -51,6 +51,7 @@ public class PatternActivity extends AppCompatActivity {
                 if (PatternLockUtils.patternToString(patternLockView, pattern).equalsIgnoreCase("123")) {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
                     Intent intent = new Intent(PatternActivity.this, LoginActivity.class);
+
                     startActivity(intent);
                 } else {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);

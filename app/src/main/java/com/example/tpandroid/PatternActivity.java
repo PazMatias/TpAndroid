@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.tpandroid.databinding.ActivityMainBinding;
-import com.example.tpandroid.Views.LoginActivity;
 
+import com.example.tpandroid.Views.LoginActivity;
+import com.example.tpandroid.databinding.ActivityMainBinding;
+import com.example.tpandroid.Views.BatteryActivity;
 import java.util.List;
 
 public class PatternActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class PatternActivity extends AppCompatActivity {
                         PatternLockUtils.patternToString(patternLockView, pattern));
                 if (PatternLockUtils.patternToString(patternLockView, pattern).equalsIgnoreCase("123")) {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
-                    Intent intent = new Intent(PatternActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(PatternActivity.this, BatteryActivity.class);
                     startActivity(intent);
                 } else {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);

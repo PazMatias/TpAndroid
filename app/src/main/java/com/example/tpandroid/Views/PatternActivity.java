@@ -51,7 +51,7 @@ public class PatternActivity extends AppCompatActivity {
                         PatternLockUtils.patternToString(patternLockView, pattern));
                 if (PatternLockUtils.patternToString(patternLockView, pattern).equalsIgnoreCase("123")) {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
-                    Intent intent = new Intent(PatternActivity.this, BatteryActivity.class);
+                    Intent intent = new Intent(PatternActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
                     patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);

@@ -82,4 +82,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean hasErrors(EditText editText){
         return editText.getError() != null;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

@@ -2,6 +2,7 @@
     <string name="app_name">TpAndroid</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="url_register_api">http://so-unlam.net.ar/api/</string>
     <string name="battery">Battery charge</string>
 
 </resources>

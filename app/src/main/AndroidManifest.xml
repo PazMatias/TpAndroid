@@ -14,6 +14,9 @@
         android:theme="@style/Theme.TpAndroid"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Views.HomeActivity"
+            android:exported="true" />
+        <activity
             android:name=".Views.BatteryActivity"
             android:exported="false" />
         <activity

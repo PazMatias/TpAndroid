@@ -4,12 +4,14 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tpandroid.R;
 import com.example.tpandroid.Views.RegisterActivity;
 import com.example.tpandroid.helpers.ConnectionHelper;
+import com.example.tpandroid.helpers.RegisterEventHelper;
+import com.example.tpandroid.helpers.TokenSingleton;
 import com.example.tpandroid.interfaces.LoginInterface;
 import com.example.tpandroid.retrofit.requests.LoginRequest;
 import com.example.tpandroid.retrofit.responses.LoginResponse;
-import com.example.tpandroid.retrofit.responses.RegisterResponse;
 import com.example.tpandroid.services.SoaService;
 
 import retrofit2.Call;
@@ -54,6 +56,11 @@ public class LoginModel implements LoginInterface.Model {
                         loginResponse.setSuccess(response.body().getSuccess());
                         loginResponse.setToken(response.body().getToken());
                         loginResponse.setToken_refresh(response.body().getToken_refresh());
+
+                        TokenSingleton tokenSingleton = TokenSingleton.getInstance(response.body().getToken(),response.body().getToken_refresh());
+
+                        RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
+                        hiloRegistraEvento.execute(uri,"Probando Log","Se ejecuto el hilo que logea jeje");
                     }
                     else{
 

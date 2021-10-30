@@ -3,8 +3,10 @@ package com.example.tpandroid.helpers;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.tpandroid.Views.RegisterActivity;
 import com.example.tpandroid.retrofit.requests.RegisterEventRequest;
 import com.example.tpandroid.retrofit.responses.LoginResponse;
+import com.example.tpandroid.retrofit.responses.RefreshTokenResponse;
 import com.example.tpandroid.retrofit.responses.RegisterEventResponse;
 import com.example.tpandroid.services.SoaService;
 
@@ -19,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegisterEventHelper extends AsyncTask<String, Integer, String> {
 
 
+    private static String TAG = RegisterEventHelper.class.getName();
 
     @Override
     protected String doInBackground(String... strings) {
@@ -27,8 +30,8 @@ public class RegisterEventHelper extends AsyncTask<String, Integer, String> {
 
         RegisterEventRequest registerEventRequest = new RegisterEventRequest();
         registerEventRequest.setEnv("TEST");
-        registerEventRequest.setTypeEvents("Login");
-        registerEventRequest.setDescription("El usuario se logeo");
+        registerEventRequest.setTypeEvents(strings[1]);
+        registerEventRequest.setDescription(strings[2]);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -38,22 +41,30 @@ public class RegisterEventHelper extends AsyncTask<String, Integer, String> {
 
         SoaService soaService = retrofit.create(SoaService.class);
 
-        Call<RegisterEventResponse> call = soaService.registerEvents("Bearer " + tokenSingleton.token,registerEventRequest);
+        Call<RegisterEventResponse> callRegisterEvent = soaService.registerEvents("Bearer " + tokenSingleton.token, registerEventRequest);
         try {
-            Response<RegisterEventResponse> response = call.execute();
-            RegisterEventResponse registerEventResponse = new RegisterEventResponse();
-            registerEventResponse.setEnv(response.body().getEnv());
-            registerEventResponse.setSuccess(response.body().getSuccess());
-            registerEventResponse.setEvent(response.body().getData());
+            Response<RegisterEventResponse> response = callRegisterEvent.execute();
+            if (response.code() == 200) {
+                RegisterEventResponse registerEventResponse = new RegisterEventResponse();
+                registerEventResponse.setEnv(response.body().getEnv());
+                registerEventResponse.setSuccess(response.body().getSuccess());
+                registerEventResponse.setEvent(response.body().getData());
+                Log.i(TAG,"SE REGISTRO TODO BIEN");
+            } else {
+                Log.e(TAG, "Token Vencido");
+                Call<RefreshTokenResponse> callRefreshToken = soaService.refreshToken("Bearer" + tokenSingleton.token_refresh);
+                Response<RefreshTokenResponse> responseToken = callRefreshToken.execute();
+                if (responseToken.code() == 200) {
+                    tokenSingleton.setToken(responseToken.body().getToken());
+                } else {
+                    Log.e(TAG, "fallo el refresco del toke");
+                }
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
-    private RegisterEventResponse doRegister(SoaService soaService){
-
-    }
 }

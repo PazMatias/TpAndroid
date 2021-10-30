@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.helpers.RegisterEventHelper;
 import com.example.tpandroid.helpers.TokenSingleton;
 import com.example.tpandroid.interfaces.LoginInterface;
 import com.example.tpandroid.interfaces.RegisterInterface;
@@ -101,8 +102,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (result.getSuccess()) {
             Toast.makeText(LoginActivity.this, "Logeo Exitoso!", Toast.LENGTH_LONG).show();
             Log.i(TAG, "Logeo Exitoso!");
-            TokenSingleton tokenSingleton = TokenSingleton.getInstance(result.getToken(),result.getToken_refresh());
-
              Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
              startActivity(intent);
         } else {

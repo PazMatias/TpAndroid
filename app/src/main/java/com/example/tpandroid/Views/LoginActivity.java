@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.helpers.RegisterEventHelper;
+import com.example.tpandroid.helpers.TokenSingleton;
 import com.example.tpandroid.interfaces.LoginInterface;
 import com.example.tpandroid.interfaces.RegisterInterface;
 import com.example.tpandroid.presenters.LoginPresenter;

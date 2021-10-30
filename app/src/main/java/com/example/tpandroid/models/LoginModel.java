@@ -4,13 +4,15 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tpandroid.R;
 import com.example.tpandroid.Views.RegisterActivity;
 import com.example.tpandroid.helpers.ConnectionHelper;
+import com.example.tpandroid.helpers.RegisterEventHelper;
+import com.example.tpandroid.helpers.TokenSingleton;
 import com.example.tpandroid.helpers.PreferencesHelper;
 import com.example.tpandroid.interfaces.LoginInterface;
 import com.example.tpandroid.retrofit.requests.LoginRequest;
 import com.example.tpandroid.retrofit.responses.LoginResponse;
-import com.example.tpandroid.retrofit.responses.RegisterResponse;
 import com.example.tpandroid.services.SoaService;
 
 import retrofit2.Call;
@@ -40,6 +42,8 @@ public class LoginModel implements LoginInterface.Model {
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(uri)
                     .build();
+
+
             SoaService soaService = retrofit.create(SoaService.class);
 
             Call<LoginResponse> call = soaService.login(request);
@@ -56,6 +60,11 @@ public class LoginModel implements LoginInterface.Model {
                         String value = PreferencesHelper.LoadValue(context,"loginCount",request.getEmail().toString());
                             PreferencesHelper.Save(context,"loginCount",request.getEmail().toString(),value.equals("key invalida")?"1":String.valueOf(Integer.parseInt(value) + 1));
 
+
+                        TokenSingleton tokenSingleton = TokenSingleton.getInstance(response.body().getToken(),response.body().getToken_refresh());
+
+                        RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
+                        hiloRegistraEvento.execute(uri,"Probando Log","Se ejecuto el hilo que logea jeje");
                     }
                     else{
 

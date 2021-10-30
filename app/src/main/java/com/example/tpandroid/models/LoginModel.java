@@ -39,6 +39,8 @@ public class LoginModel implements LoginInterface.Model {
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(uri)
                     .build();
+
+
             SoaService soaService = retrofit.create(SoaService.class);
 
             Call<LoginResponse> call = soaService.login(request);

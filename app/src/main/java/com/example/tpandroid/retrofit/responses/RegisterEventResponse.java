@@ -24,4 +24,8 @@ public class RegisterEventResponse {
     public EventResponse getData() {
         return event;
     }
+
+    public void setEvent(EventResponse event) {
+        this.event = event;
+    }
 }

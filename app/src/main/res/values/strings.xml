@@ -7,5 +7,9 @@
     <string name="metrics_tab">Metricas</string>
     <string name="lines_tab">Lineas</string>
     <string name="tips_tab">Tips</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_metrics_fragment">Hello metrics fragment</string>
+    <string name="hello_lines_fragment">Hello lines fragment</string>
+    <string name="hello_tips_fragment">Hello tips fragment</string>
 
 </resources>

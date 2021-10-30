@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/tabsContainer"
+        />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"

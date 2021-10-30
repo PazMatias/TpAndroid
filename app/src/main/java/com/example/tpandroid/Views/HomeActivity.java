@@ -16,13 +16,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public String email;
 
     private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
-
+        email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,new MetricsFragment()).commit();
@@ -35,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
             switch(item.getItemId())
             {
                 case R.id.metrics_page:
-                    fragment = new MetricsFragment();
+                    fragment = MetricsFragment.newInstance(email);
                     break;
                 case R.id.lines_page:
                     fragment = new LinesFragment();

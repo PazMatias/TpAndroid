@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.tpandroid.Views.RegisterActivity;
 import com.example.tpandroid.helpers.ConnectionHelper;
+import com.example.tpandroid.helpers.PreferencesHelper;
 import com.example.tpandroid.interfaces.LoginInterface;
 import com.example.tpandroid.retrofit.requests.LoginRequest;
 import com.example.tpandroid.retrofit.responses.LoginResponse;
@@ -52,6 +53,9 @@ public class LoginModel implements LoginInterface.Model {
                         loginResponse.setSuccess(response.body().getSuccess());
                         loginResponse.setToken(response.body().getToken());
                         loginResponse.setToken_refresh(response.body().getToken_refresh());
+                        String value = PreferencesHelper.LoadValue(context,"loginCount",request.getEmail().toString());
+                            PreferencesHelper.Save(context,"loginCount",request.getEmail().toString(),value.equals("key invalida")?"1":String.valueOf(Integer.parseInt(value) + 1));
+
                     }
                     else{
 

@@ -17,6 +17,6 @@ public interface LoginInterface {
         void login(LoginRequest request, String uri, Context context);
     }
     interface Model {
-        void login(LoginInterface request, String uri,Context context);
+        void login(LoginRequest request, String uri,Context context);
     }
 }

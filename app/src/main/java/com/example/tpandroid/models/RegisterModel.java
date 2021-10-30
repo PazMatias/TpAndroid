@@ -49,11 +49,21 @@ public class RegisterModel implements RegisterInterface.Model {
 
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
 
+                if (response.isSuccessful()){
+
                 responseModel.setEnv(response.body().getEnv());
                 responseModel.setToken(response.body().getToken());
                 responseModel.setToken_refresh(response.body().getToken_refresh());
                 responseModel.setSuccess(response.body().getSuccess());
+                }
+                else{
 
+                    responseModel.setSuccess(false);
+                    responseModel.setEnv(request.getEnv());
+                    responseModel.setMsg("Registro Fallido");
+
+                    Log.e(TAG,response.message());
+                }
                 presenter.showResult(responseModel);
             }
 

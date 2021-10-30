@@ -12,31 +12,24 @@ import android.widget.TextView;
 
 import com.example.tpandroid.Views.PatternActivity;
 import com.example.tpandroid.R;
+import com.example.tpandroid.interfaces.BatteryInterface;
+import com.example.tpandroid.presenters.BatteryPresenter;
 
 import java.text.DecimalFormat;
 
-public class BatteryActivity extends AppCompatActivity {
+public class BatteryActivity extends AppCompatActivity implements BatteryInterface.View {
 
-    Button continueButton;
-
+    private BatteryInterface.Presenter batteryPresenter;
+    private TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battery);
 
-        IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = this.registerReceiver(null, iFilter);
+        batteryPresenter = new BatteryPresenter(this);
+        tv = findViewById(R.id.textViewPercentageBattery);
 
-        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-
-        int batteryPct = (level * 100 / scale);
-        DecimalFormat formatPercentageBattery = new DecimalFormat("#.");
-        TextView tv = findViewById(R.id.textViewPercentageBattery);
-        String msgBattery = String.valueOf(batteryPct)+ "%";
-        tv.setText(msgBattery);
-
-        (new Handler()).postDelayed(this::afterWait, 2000);
+        batteryPresenter.calculateBattery(this);
     }
 
     private void afterWait() {
@@ -48,5 +41,12 @@ public class BatteryActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         super.finish();
+    }
+
+    @Override
+    public void showResult(String msgBattery) {
+        tv.setText(msgBattery);
+        (new Handler()).postDelayed(this::afterWait, 2000);
+
     }
 }

@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return null;
         } else {
 
-            request.setEnv("TEST");
+            request.setEnv("PROD");
             request.setName(nameTextInput.getText().toString());
             request.setLastname(surnameTextInput.getText().toString());
             request.setDni(Long.parseLong(dniTextInput.getText().toString()));

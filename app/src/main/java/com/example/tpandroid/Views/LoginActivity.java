@@ -52,11 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (v.getId()){
             case R.id.loginButton:
-                if(validateForm()){
-                    Toast.makeText(LoginActivity.this, "Datos incorrectos", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(LoginActivity.this, "Apretaste el boton de login capo", Toast.LENGTH_LONG).show();
+                if(!validateForm()){
+                    LoginRequest loginRequest= new LoginRequest();
+                    loginRequest.setEmail(emailTextInput.getText().toString());
+                    loginRequest.setPassword(passwordTextInput.getText().toString());
+                    presenter.login(loginRequest,getString(R.string.url_register_api),this);
                 }
                 break;
             case R.id.registerButton:

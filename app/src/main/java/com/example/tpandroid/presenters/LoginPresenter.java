@@ -20,11 +20,14 @@ public class LoginPresenter implements LoginInterface.Presenter {
 
     @Override
     public void showResult(LoginResponse result) {
+        if (view != null)
+            view.showResult(result);
 
     }
 
     @Override
     public void login(LoginRequest request, String uri, Context context) {
-
+        if (model != null)
+            model.login(request, uri,context);
     }
 }

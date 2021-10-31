@@ -27,7 +27,11 @@
         android:onClick="onCheckboxClicked"
         android:text="@string/line_96_ciudad_evita"
         app:layout_constraintEnd_toEndOf="parent" />
+
     </LinearLayout>
+
+
+
 
 
 </FrameLayout>

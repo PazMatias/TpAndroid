@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.BoringLayout;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,12 +25,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener , LinesFragment.RegisterSensor {
 
-    private final static float ACC = 30;
+    private final static float ACC = 12;
 
     public String email;
 
     private MediaPlayer mPlayer;
     private SensorManager mSensor;
+    private Vibrator mVibrator;
     private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,9 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mPlayer = MediaPlayer.create(this,R.raw.minecrafteating);
+        mPlayer = MediaPlayer.create(this,R.raw.minecraft_eating);
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
 
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -89,19 +94,16 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         super.onStop();
     }
 
+    @Override
     public void registerSenser()
     {
         boolean done;
-        done = mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-
-        if (!done)
-        {
-
-        }
+        done = mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 
         Log.i("sensor", "register");
     }
 
+    @Override
     public void unregisterSenser()
     {
         mSensor.unregisterListener((SensorEventListener) this);

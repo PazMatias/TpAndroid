@@ -11,7 +11,7 @@
     <string name="hello_metrics_fragment">Hello metrics fragment</string>
     <string name="hello_tips_fragment">Hello tips fragment</string>
     <string name="line_96_san_justo">96 San Justo</string>
-    <string name="line_96_ciudad_evita">96 San Justo</string>
+    <string name="line_96_ciudad_evita">96 Ciudad Evita</string>
     <string name="login_count">Cantidad de logueos:</string>
 
 </resources>

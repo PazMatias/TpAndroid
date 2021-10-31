@@ -21,7 +21,7 @@ import com.example.tpandroid.Views.Fragments.MetricsFragment;
 import com.example.tpandroid.Views.Fragments.TipsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener {
+public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener , LinesFragment.RegisterSensor {
 
     private final static float ACC = 30;
 
@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mPlayer = MediaPlayer.create(this,R.raw.minecraftEating);
+        mPlayer = MediaPlayer.create(this,R.raw.minecrafteating);
 
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         super.onStop();
     }
 
-    private void registerSenser()
+    public void registerSenser()
     {
         boolean done;
         done = mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         Log.i("sensor", "register");
     }
 
-    private void unregisterSenser()
+    public void unregisterSenser()
     {
         mSensor.unregisterListener((SensorEventListener) this);
         Log.i("sensor", "unregister");

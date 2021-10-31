@@ -1,5 +1,6 @@
 package com.example.tpandroid.Views.Fragments;
 
+import android.app.Activity;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Views.HomeActivity;
 import com.example.tpandroid.Views.RegisterActivity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -40,8 +42,7 @@ public class LinesFragment extends Fragment {
     private String mParam2;
 
     private CheckBox checkBox;
-    private MediaPlayer mPlayer;
-    private SensorManager mSensor;
+
     public LinesFragment() {
         // Required empty public constructor
     }
@@ -64,6 +65,17 @@ public class LinesFragment extends Fragment {
         return fragment;
     }
 
+    private RegisterSensor listener;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            listener = (RegisterSensor) activity;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +90,8 @@ public class LinesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View home = inflater.inflate(R.layout.fragment_lines, container, false);
-        checkBox = home.findViewById(R.id.line_96_checkbox);
-        mSensor = home.getSystemService(SENSOR_SERVICE);
+        checkBox = home.findViewById(R.id.line_96_ciudad_evita_checkbox);
+
         return home;
     }
 
@@ -91,8 +103,16 @@ public class LinesFragment extends Fragment {
             public void onClick(View v) {
 
                 if (checkBox.isChecked())
-                    Log.i(TAG,"HOLA MUNDO");
+                    listener.registerSenser();
+                else
+                    listener.unregisterSenser();
+
             }
         });
+    }
+
+    public interface RegisterSensor{
+        public void registerSenser();
+        public void unregisterSenser();
     }
 }

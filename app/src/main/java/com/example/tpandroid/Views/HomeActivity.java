@@ -23,6 +23,7 @@ import com.example.tpandroid.R;
 import com.example.tpandroid.Views.Fragments.LinesFragment;
 import com.example.tpandroid.Views.Fragments.MetricsFragment;
 import com.example.tpandroid.Views.Fragments.TipsFragment;
+import com.example.tpandroid.helpers.RegisterEventHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener , LinesFragment.RegisterSensor {
@@ -128,6 +129,8 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
             {
                 Log.i("sensor", "running");
                 mPlayer.start();
+                RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
+                hiloRegistraEvento.execute(String.valueOf(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
                 Intent intent = new Intent(this, BusDetailActivity.class);
                 startActivity(intent);
             }

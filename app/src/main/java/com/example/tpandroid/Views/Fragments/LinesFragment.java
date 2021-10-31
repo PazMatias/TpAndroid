@@ -1,6 +1,7 @@
 package com.example.tpandroid.Views.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,15 +13,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Utils.Colectivo;
 import com.example.tpandroid.Views.HomeActivity;
+import com.example.tpandroid.Views.LoginActivity;
 import com.example.tpandroid.Views.RegisterActivity;
+import com.example.tpandroid.retrofit.requests.LoginRequest;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.widget.CompoundButton;
+import android.widget.ListView;
 
 
 /**
@@ -41,7 +50,9 @@ public class LinesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private CheckBox checkBox;
+    private boolean selec = false;
+    private CheckBox checkBox96ce;
+    private CheckBox checkBox96sj;
 
     public LinesFragment() {
         // Required empty public constructor
@@ -66,6 +77,7 @@ public class LinesFragment extends Fragment {
     }
 
     private RegisterSensor listener;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -90,7 +102,8 @@ public class LinesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View home = inflater.inflate(R.layout.fragment_lines, container, false);
-        checkBox = home.findViewById(R.id.line_96_ciudad_evita_checkbox);
+        checkBox96ce = home.findViewById(R.id.line_96_ciudad_evita_checkbox);
+        checkBox96sj = home.findViewById(R.id.line_96_san_justo_checkbox);
 
         return home;
     }
@@ -98,12 +111,30 @@ public class LinesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        checkBox96sj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (checkBox.isChecked())
+                if (checkBox96sj.isChecked()){
+
                     listener.registerSenser();
+                    checkBox96ce.setChecked(false);
+                }
+                else
+                    listener.unregisterSenser();
+
+            }
+        });
+
+        checkBox96ce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (checkBox96ce.isChecked()){
+
+                    listener.registerSenser();
+                    checkBox96sj.setChecked(false);
+                }
                 else
                     listener.unregisterSenser();
 
@@ -111,8 +142,11 @@ public class LinesFragment extends Fragment {
         });
     }
 
-    public interface RegisterSensor{
+
+    public interface RegisterSensor {
+
         public void registerSenser();
+
         public void unregisterSenser();
     }
 }

@@ -26,7 +26,11 @@ public class HomeActivity extends AppCompatActivity {
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
-        getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,new MetricsFragment()).commit();
+        Bundle bundle = new Bundle();
+        bundle.putString("email",email);
+        Fragment fragment = new MetricsFragment();
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,fragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -36,7 +40,10 @@ public class HomeActivity extends AppCompatActivity {
             switch(item.getItemId())
             {
                 case R.id.metrics_page:
-                    fragment = MetricsFragment.newInstance(email);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("email",email);
+                    fragment = new MetricsFragment();
+                    fragment.setArguments(bundle);
                     break;
                 case R.id.lines_page:
                     fragment = new LinesFragment();

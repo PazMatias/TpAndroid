@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Utils.Global;
 import com.example.tpandroid.helpers.ConnectionHelper;
 import com.example.tpandroid.interfaces.RegisterInterface;
 import com.example.tpandroid.presenters.RegisterPresenter;
@@ -67,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return null;
         } else {
 
-            request.setEnv("PROD");
+            request.setEnv(Global.ENVIRONMENT);
             request.setName(nameTextInput.getText().toString());
             request.setLastname(surnameTextInput.getText().toString());
             request.setDni(Long.parseLong(dniTextInput.getText().toString()));

@@ -6,9 +6,11 @@
     tools:context=".Views.Fragments.LinesFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <CheckBox android:id="@+id/line_96_checkbox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_lines_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/line_96"
+        android:onClick="onCheckboxClicked"/>
 
 </FrameLayout>

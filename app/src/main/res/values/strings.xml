@@ -10,6 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_metrics_fragment">Hello metrics fragment</string>
     <string name="hello_lines_fragment">Hello lines fragment</string>
+    <string name="line_96">96 San Justo</string>
     <string name="hello_tips_fragment">Hello tips fragment</string>
 
 </resources>

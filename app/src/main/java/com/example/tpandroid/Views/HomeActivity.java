@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,fragment).commit();
     }
-
+    @Override public void onBackPressed() { moveTaskToBack(true); }
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener(){
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {

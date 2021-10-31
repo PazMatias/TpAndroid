@@ -1,6 +1,7 @@
 package com.example.tpandroid.Views;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 
@@ -24,6 +25,8 @@ public class PatternActivity extends AppCompatActivity {
     PatternLockView patternLockView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

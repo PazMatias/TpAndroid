@@ -1,14 +1,25 @@
 package com.example.tpandroid.Views.Fragments;
 
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Views.RegisterActivity;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,10 +33,15 @@ public class LinesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static String TAG = RegisterActivity.class.getName();
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private CheckBox checkBox;
+    private MediaPlayer mPlayer;
+    private SensorManager mSensor;
     public LinesFragment() {
         // Required empty public constructor
     }
@@ -61,6 +77,22 @@ public class LinesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lines, container, false);
+        View home = inflater.inflate(R.layout.fragment_lines, container, false);
+        checkBox = home.findViewById(R.id.line_96_checkbox);
+        mSensor = home.getSystemService(SENSOR_SERVICE);
+        return home;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (checkBox.isChecked())
+                    Log.i(TAG,"HOLA MUNDO");
+            }
+        });
     }
 }

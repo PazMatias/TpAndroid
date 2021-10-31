@@ -4,9 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.BoringLayout;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 
 import com.example.tpandroid.R;
 import com.example.tpandroid.Views.Fragments.LinesFragment;
@@ -14,10 +21,14 @@ import com.example.tpandroid.Views.Fragments.MetricsFragment;
 import com.example.tpandroid.Views.Fragments.TipsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener {
+
+    private final static float ACC = 30;
 
     public String email;
 
+    private MediaPlayer mPlayer;
+    private SensorManager mSensor;
     private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +36,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_activity);
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
+        mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mPlayer = MediaPlayer.create(this,R.raw.minecraftEating);
+
+        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mPlayer.setVolume(1.0f, 1.0f);
+            }
+        });
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         Bundle bundle = new Bundle();
         bundle.putString("email",email);
@@ -57,4 +77,63 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    @Override
+    protected void onStop()
+    {
+        unregisterSenser();
+        if (mPlayer != null)
+        {
+            mPlayer.release();
+        }
+        super.onStop();
+    }
+
+    private void registerSenser()
+    {
+        boolean done;
+        done = mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
+        if (!done)
+        {
+
+        }
+
+        Log.i("sensor", "register");
+    }
+
+    private void unregisterSenser()
+    {
+        mSensor.unregisterListener((SensorEventListener) this);
+        Log.i("sensor", "unregister");
+    }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+        int sensorType = event.sensor.getType();
+
+        float[] values = event.values;
+
+        if (sensorType == Sensor.TYPE_ACCELEROMETER)
+        {
+            if ((Math.abs(values[0]) > ACC || Math.abs(values[1]) > ACC || Math.abs(values[2]) > ACC))
+            {
+                Log.i("sensor", "running");
+                mPlayer.start();
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+    }
 }

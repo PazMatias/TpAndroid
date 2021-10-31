@@ -23,7 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener , LinesFragment.RegisterSensor {
 
-    private final static float ACC = 30;
+    private final static float ACC = 12;
 
     public String email;
 
@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mPlayer = MediaPlayer.create(this,R.raw.minecrafteating);
+        mPlayer = MediaPlayer.create(this,R.raw.minecraft_eating);
 
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

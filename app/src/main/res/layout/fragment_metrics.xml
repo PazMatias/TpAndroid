@@ -6,11 +6,27 @@
     tools:context=".Views.Fragments.MetricsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/yellow">
     <TextView
-
-        android:id="@+id/metricsTextView"
+        android:id="@+id/metricsTextViewLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_metrics_fragment" />
+        android:textSize="22dp"
+        android:textColor="@color/black"
+        android:text="@string/login_count"
+        android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/metricsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:textAlignment="viewEnd"
+            android:textColor="@color/black"
+            android:textSize="22dp" />
+    </LinearLayout>
 </RelativeLayout>

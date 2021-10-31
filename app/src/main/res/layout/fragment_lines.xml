@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Views.Fragments.LinesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <CheckBox android:id="@+id/line_96_checkbox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/line_96"
-        android:onClick="onCheckboxClicked"/>
+        android:orientation="vertical">
+    <CheckBox
+        android:id="@+id/line_96_san_justo_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22dp"
+        android:onClick="onCheckboxClicked"
+        android:text="@string/line_96_san_justo" />
+
+    <CheckBox
+        android:id="@+id/line_96_ciudad_evita_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22dp"
+        android:onClick="onCheckboxClicked"
+        android:text="@string/line_96_ciudad_evita"
+        app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
+
 
 </FrameLayout>

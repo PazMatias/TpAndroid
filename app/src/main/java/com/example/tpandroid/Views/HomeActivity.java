@@ -20,10 +20,12 @@ import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Utils.MetricsTables;
 import com.example.tpandroid.Views.Fragments.LinesFragment;
 import com.example.tpandroid.Views.Fragments.MetricsFragment;
 import com.example.tpandroid.Views.Fragments.TipsFragment;
 import com.example.tpandroid.helpers.RegisterEventHelper;
+import com.example.tpandroid.helpers.PreferencesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener , LinesFragment.RegisterSensor {
@@ -131,6 +133,9 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
                 mPlayer.start();
                 RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
                 hiloRegistraEvento.execute(String.valueOf(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
+                String value = PreferencesHelper.LoadValue(this,MetricsTables.STOPCOUNT,this.email);
+                PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,value);
+
                 Intent intent = new Intent(this, BusDetailActivity.class);
                 startActivity(intent);
             }

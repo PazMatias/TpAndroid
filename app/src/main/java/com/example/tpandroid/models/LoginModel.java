@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Utils.MetricsTables;
 import com.example.tpandroid.Views.RegisterActivity;
 import com.example.tpandroid.helpers.ConnectionHelper;
 import com.example.tpandroid.helpers.RegisterEventHelper;
@@ -57,8 +58,8 @@ public class LoginModel implements LoginInterface.Model {
                         loginResponse.setSuccess(response.body().getSuccess());
                         loginResponse.setToken(response.body().getToken());
                         loginResponse.setToken_refresh(response.body().getToken_refresh());
-                        String value = PreferencesHelper.LoadValue(context,"loginCount",request.getEmail().toString());
-                            PreferencesHelper.Save(context,"loginCount",request.getEmail().toString(),value.equals("key invalida")?"1":String.valueOf(Integer.parseInt(value) + 1));
+                        String value = PreferencesHelper.LoadValue(context, MetricsTables.LOGINCOUNT,request.getEmail().toString());
+                        PreferencesHelper.Save(context,MetricsTables.LOGINCOUNT,request.getEmail().toString(),value);
 
 
                         TokenSingleton tokenSingleton = TokenSingleton.getInstance(response.body().getToken(),response.body().getToken_refresh());

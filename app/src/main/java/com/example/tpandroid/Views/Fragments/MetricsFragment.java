@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tpandroid.R;
+import com.example.tpandroid.Utils.MetricsTables;
 import com.example.tpandroid.helpers.PreferencesHelper;
 
 import org.w3c.dom.Text;
@@ -30,7 +31,8 @@ public class MetricsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private TextView metricsTextView;
+    private TextView metricsLoginTextView;
+    private TextView metricsStopsTextView;
     private String email;
 
     public MetricsFragment() {
@@ -70,7 +72,8 @@ public class MetricsFragment extends Fragment {
         if (getArguments()!=null)
             email = getArguments().getString("email");
         View home = inflater.inflate(R.layout.fragment_metrics, container, false);
-        metricsTextView = home.findViewById(R.id.metricsTextView);
+        metricsLoginTextView = home.findViewById(R.id.metricsLoginTextView);
+        metricsStopsTextView = home.findViewById(R.id.metricsStopTextView);
 
         return home;
     }
@@ -78,6 +81,7 @@ public class MetricsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        metricsTextView.append(PreferencesHelper.LoadValue(view.getContext(),"loginCount",email));
+        metricsLoginTextView.append(PreferencesHelper.LoadValue(view.getContext(), MetricsTables.LOGINCOUNT,email));
+        metricsStopsTextView.append(PreferencesHelper.LoadValue(view.getContext(), MetricsTables.STOPCOUNT,email));
     }
 }

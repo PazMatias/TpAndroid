@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -40,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mPlayer = MediaPlayer.create(this,R.raw.minecrafteating);
+        mPlayer = MediaPlayer.create(this,R.raw.minecraft_eating);
 
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -116,10 +117,12 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
         if (sensorType == Sensor.TYPE_ACCELEROMETER)
         {
-            if ((Math.abs(values[0]) > ACC || Math.abs(values[1]) > ACC || Math.abs(values[2]) > ACC))
+            if ((Math.abs(values[0]) > ACC || Math.abs(values[1]) > ACC))
             {
                 Log.i("sensor", "running");
                 mPlayer.start();
+                Intent intent = new Intent(this, BusDetailActivity.class);
+                startActivity(intent);
             }
         }
 

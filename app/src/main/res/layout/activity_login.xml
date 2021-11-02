@@ -8,7 +8,6 @@
     android:background="@color/orange"
     >
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="137dp"

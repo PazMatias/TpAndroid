@@ -17,5 +17,6 @@
     <color name="darkGreen">#E2C275</color>
     <color name="registerColor">#99A799</color>
     <color name="yellow">#F1E474</color>
+    <color name="red">#FF0000</color>
 
 </resources>

@@ -28,9 +28,9 @@ import com.example.tpandroid.helpers.RegisterEventHelper;
 import com.example.tpandroid.helpers.PreferencesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener , LinesFragment.RegisterSensor {
+public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener, LinesFragment.RegisterSensor {
 
-    private final static float ACC = 12;
+    private final static float ACC = 800;
 
     public String email;
 
@@ -38,6 +38,10 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager mSensor;
     private Vibrator mVibrator;
     private BottomNavigationView bottomNavigationView;
+
+    private long lastUpdate;
+    private float last_x = -1.0f, last_y = -1.0f, last_z = -1.0f, x, y, z;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -46,7 +50,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mPlayer = MediaPlayer.create(this,R.raw.minecraft_eating);
+        mPlayer = MediaPlayer.create(this, R.raw.minecraft_eating);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 
@@ -59,21 +63,25 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         bottomNavigationView.setOnNavigationItemReselectedListener(bottomReselectedNavMethod);
         Bundle bundle = new Bundle();
-        bundle.putString("email",email);
+        bundle.putString("email", email);
         Fragment fragment = new MetricsFragment();
         fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer, fragment).commit();
     }
-    @Override public void onBackPressed() { moveTaskToBack(true); }
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment = null ;
-            switch(item.getItemId())
-            {
+            Fragment fragment = null;
+            switch (item.getItemId()) {
                 case R.id.metrics_page:
                     Bundle bundle = new Bundle();
-                    bundle.putString("email",email);
+                    bundle.putString("email", email);
                     fragment = new MetricsFragment();
                     fragment.setArguments(bundle);
                     break;
@@ -85,12 +93,12 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
                     break;
             }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer, fragment).commit();
             return true;
         }
     };
 
-    private BottomNavigationView.OnNavigationItemReselectedListener bottomReselectedNavMethod = new BottomNavigationView.OnNavigationItemReselectedListener(){
+    private BottomNavigationView.OnNavigationItemReselectedListener bottomReselectedNavMethod = new BottomNavigationView.OnNavigationItemReselectedListener() {
         @Override
         public void onNavigationItemReselected(@NonNull MenuItem item) {
 
@@ -98,19 +106,16 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     };
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         unregisterSenser();
-        if (mPlayer != null)
-        {
+        if (mPlayer != null) {
             mPlayer.release();
         }
         super.onStop();
     }
 
     @Override
-    public void registerSenser()
-    {
+    public void registerSenser() {
         boolean done;
         done = mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 
@@ -118,8 +123,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void unregisterSenser()
-    {
+    public void unregisterSenser() {
         mSensor.unregisterListener((SensorEventListener) this);
         Log.i("sensor", "unregister");
     }
@@ -132,17 +136,33 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
         float[] values = event.values;
 
-        if (sensorType == Sensor.TYPE_ACCELEROMETER)
-        {
-            if ((Math.abs(values[0]) > ACC || Math.abs(values[1]) > ACC))
-            {
-                Log.i("sensor", "running");
-                mPlayer.start();
+        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
+            long curTime = System.currentTimeMillis();
 
-                Intent intent = new Intent(this, BusDetailActivity.class);
-                intent.putExtra("email",email);
-                startActivity(intent);
+            if ((curTime - lastUpdate) > 100) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+                x = values[0];
+                y = values[1];
+                z = values[2];
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+
+                last_x = x;
+                last_y = y;
+                last_z = z;
+
+                if (speed > ACC) {
+
+                    Log.i("sensor", "running");
+                    mPlayer.start();
+
+                    Intent intent = new Intent(this, BusDetailActivity.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                }
+
             }
+
         }
 
     }

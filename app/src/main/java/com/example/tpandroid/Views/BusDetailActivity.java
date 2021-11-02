@@ -24,13 +24,15 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         setContentView(R.layout.activity_bus_detail);
 
         email = getIntent().getExtras().getString("email");
+
         String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT,this.email,"0");
         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
         hiloRegistraEvento.execute(getString(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
         PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,value);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
+        //mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        //mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override

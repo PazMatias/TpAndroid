@@ -14,11 +14,12 @@
     <string name="line_96_ciudad_evita">96 Ciudad Evita</string>
     <string name="login_count">Cantidad de logueos:</string>
     <string name="stop_count">Solicitudes de parada:</string>
-    <string name="waiting_bus">Solicito parada de colectivo:</string>
+    <string name="waiting_bus">Solicitando parada de colectivo</string>
     <string name="available_seats">Asientos disponibles:</string>
     <string name="available_seats_value">10/24</string>
     <string name="plate">Patente:</string>
     <string name="plate_value">ABC123</string>
     <string name="cancel_button">Cancelar</string>
+    <string name="powered_by">2021 © Grupo 13</string>
 
 </resources>

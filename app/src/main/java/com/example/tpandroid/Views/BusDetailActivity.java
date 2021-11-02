@@ -39,9 +39,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         cancelarButton = findViewById(R.id.cancel_button);
 
         email = getIntent().getExtras().getString("email");
-
         Log.i("SAVESTOPS",email);
-
         String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT,this.email,"0");
         PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,String.valueOf(Integer.parseInt(value) + 1));
         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();

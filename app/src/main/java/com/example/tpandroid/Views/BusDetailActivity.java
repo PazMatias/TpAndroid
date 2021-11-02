@@ -31,9 +31,6 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         hiloRegistraEvento.execute(getString(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
         PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,String.valueOf(Integer.parseInt(value) + 1));
 
-        //mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
-        //mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override

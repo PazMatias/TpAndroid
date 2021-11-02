@@ -39,7 +39,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
         emailTextInput = findViewById(R.id.editTextLoginEmail);

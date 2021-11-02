@@ -58,8 +58,8 @@ public class LoginModel implements LoginInterface.Model {
                         loginResponse.setSuccess(response.body().getSuccess());
                         loginResponse.setToken(response.body().getToken());
                         loginResponse.setToken_refresh(response.body().getToken_refresh());
-                        String value = PreferencesHelper.LoadValue(context, MetricsTables.LOGINCOUNT,request.getEmail().toString(),"1");
-                        PreferencesHelper.Save(context,MetricsTables.LOGINCOUNT,request.getEmail().toString(),value.equals("1")?value:String.valueOf(Integer.parseInt(value) + 1));
+                        String value = PreferencesHelper.LoadValue(context, MetricsTables.LOGINCOUNT,request.getEmail().toString(),"0");
+                        PreferencesHelper.Save(context,MetricsTables.LOGINCOUNT,request.getEmail().toString(),String.valueOf(Integer.parseInt(value) + 1));
 
                         TokenSingleton tokenSingleton = TokenSingleton.getInstance(response.body().getToken(),response.body().getToken_refresh());
 

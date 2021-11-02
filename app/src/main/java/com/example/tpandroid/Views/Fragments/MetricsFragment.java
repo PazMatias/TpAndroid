@@ -81,7 +81,7 @@ public class MetricsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        metricsLoginTextView.append(PreferencesHelper.LoadValue(view.getContext(), MetricsTables.LOGINCOUNT,email));
-        metricsStopsTextView.append(PreferencesHelper.LoadValue(view.getContext(), MetricsTables.STOPCOUNT,email));
+        metricsLoginTextView.append(PreferencesHelper.LoadValue(view.getContext(), MetricsTables.LOGINCOUNT,email,"1"));
+        metricsStopsTextView.append(PreferencesHelper.LoadValue(view.getContext(), MetricsTables.STOPCOUNT,email,"0"));
     }
 }

@@ -131,12 +131,9 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
             {
                 Log.i("sensor", "running");
                 mPlayer.start();
-                String value = PreferencesHelper.LoadValue(this,MetricsTables.STOPCOUNT,this.email,"0");
-                RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
-                hiloRegistraEvento.execute(String.valueOf(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
-                PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,value);
 
                 Intent intent = new Intent(this, BusDetailActivity.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
             }
         }

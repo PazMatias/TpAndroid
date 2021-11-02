@@ -36,7 +36,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_detail);
-        cancelarButton = findViewById(R.id.cancelarButton);
+        cancelarButton = findViewById(R.id.cancel_button);
 
         email = getIntent().getExtras().getString("email");
 
@@ -86,6 +86,9 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
                 mPlayer.start();
             }
         }
+        else
+            getWindow().getDecorView().setBackgroundColor(Color.GREEN);
+
     }
 
     @Override
@@ -96,7 +99,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.cancelarButton:
+            case R.id.cancel_button:
 
                 Intent intent = new Intent(this,HomeActivity.class);
                 startActivity(intent);

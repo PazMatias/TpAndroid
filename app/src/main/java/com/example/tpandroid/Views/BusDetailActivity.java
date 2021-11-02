@@ -25,7 +25,6 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         setContentView(R.layout.activity_bus_detail);
 
         email = getIntent().getExtras().getString("email");
-        Log.i("SAVESTOPS",email);
         String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT,this.email,"0");
         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
         hiloRegistraEvento.execute(getString(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");

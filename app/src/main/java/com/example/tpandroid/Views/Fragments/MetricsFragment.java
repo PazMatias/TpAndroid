@@ -61,7 +61,6 @@ public class MetricsFragment extends Fragment {
         View home = inflater.inflate(R.layout.fragment_metrics, container, false);
         metricsLoginTextView = home.findViewById(R.id.metricsLoginTextView);
         metricsStopsTextView = home.findViewById(R.id.metricsStopTextView);
-
         return home;
     }
 

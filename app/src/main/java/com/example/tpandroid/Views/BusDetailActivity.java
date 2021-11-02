@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.example.tpandroid.R;
 import com.example.tpandroid.Utils.MetricsTables;
+import com.example.tpandroid.Utils.SonarAlertaColectivo;
+import com.example.tpandroid.Utils.TimerAlarma;
 import com.example.tpandroid.helpers.PreferencesHelper;
 import com.example.tpandroid.helpers.RegisterEventHelper;
 import com.example.tpandroid.retrofit.requests.LoginRequest;
+
+import java.util.Timer;
 
 public class BusDetailActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
     SensorManager mSensorManager;
@@ -36,7 +40,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_detail);
-        cancelarButton = findViewById(R.id.cancel_button);
+        cancelarButton = findViewById(R.id.cancelButton);
 
         email = getIntent().getExtras().getString("email");
         Log.i("SAVESTOPS",email);
@@ -56,7 +60,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     @Override
     protected void onResume() {
         super.onResume();
-        mPlayer = MediaPlayer.create(this, R.raw.minecraft_eating);
+        mPlayer = MediaPlayer.create(this, R.raw.get_over_here);
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -79,9 +83,12 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0] <= event.sensor.getMaximumRange()) {
-                mVibrator.vibrate(800);
-                mPlayer.start();
+            if (event.values[0]>= -SENSOR_SENSITIVITY && event.values[0] <= event.sensor.getMaximumRange()) {
+                Thread t = new Thread(new SonarAlertaColectivo(mVibrator,mPlayer));
+                Timer timer = new Timer();
+                timer.schedule(new TimerAlarma(t, timer), 30*1000);
+                t.start();
+                mSensorManager.unregisterListener(this);
             }
         }
         else

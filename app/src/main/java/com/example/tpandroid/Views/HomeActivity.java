@@ -18,6 +18,7 @@ import android.text.BoringLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.tpandroid.R;
 import com.example.tpandroid.Utils.MetricsTables;
@@ -31,14 +32,18 @@ import com.squareup.seismic.ShakeDetector;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener, LinesFragment.RegisterSensor {
 
-    private final static float ACC = 800;
+    private final static int ACC = 15000;
 
     public String email;
-
+    private int counter = 0;
     private SensorManager mSensor;
     private BottomNavigationView bottomNavigationView;
 
-    private float  x, y, z,acelValue,acelLast,differenceMedian=0f,shake=0.0f;
+    private float  x, y, z;
+
+    private float mLastX=-1.0f, mLastY=-1.0f, mLastZ=-1.0f;
+    private int mShakeCount = 0;
+    private long lastUpdate;
 
 
     @Override
@@ -50,8 +55,6 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        acelValue = SensorManager.GRAVITY_EARTH;
-        acelLast = SensorManager.GRAVITY_EARTH;
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
@@ -123,29 +126,34 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        x = event.values[0];
-        y = event.values[1];
-        z = event.values[2];
-        acelLast = acelValue;
-        acelValue = (float) Math.sqrt((double) (x*x + y*y + z*z));
-        float difference = acelValue - acelLast;
-        shake = shake * 0.9f + difference;
-        differenceMedian = (difference + differenceMedian) / 2 ;
-        if(difference < 0.1){
-            if(shake > 25) {
+        float[] values = event.values;
 
+            long curTime = System.currentTimeMillis();
 
-                Log.i("sensor", "running");
+            if ((curTime - lastUpdate) > 100) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+                x = values[0];
+                y = values[1];
+                z = values[2];
+                float speed = Math.abs(x + y + z - mLastX - mLastY - mLastZ) / diffTime * 10000;
 
+                mLastX = x;
+                mLastY = y;
+                mLastZ = z;
+                Toast.makeText(this, "Speed " + speed, Toast.LENGTH_SHORT).show();
+                if (speed > ACC) {
 
-                Intent intent = new Intent(this, BusDetailActivity.class);
-                intent.putExtra("email", email);
-                startActivity(intent);
+                    Log.i("sensor", "running");
+                    Intent intent = new Intent(this, BusDetailActivity.class);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                }
+
             }
-        }
-
 
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

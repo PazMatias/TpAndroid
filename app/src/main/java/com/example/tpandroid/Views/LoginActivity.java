@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     LoginRequest loginRequest= new LoginRequest();
                     loginRequest.setEmail(emailTextInput.getText().toString());
                     loginRequest.setPassword(passwordTextInput.getText().toString());
+                    loginButton.setEnabled(false);
+                    registerButton.setEnabled(false);
                     presenter.login(loginRequest,getString(R.string.url_register_api),this);
                 }
                 break;
@@ -102,6 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void showResult(LoginResponse result) {
+        loginButton.setEnabled(true);
+        registerButton.setEnabled(true);
         if (result.getSuccess()) {
             Toast.makeText(LoginActivity.this, "Logeo Exitoso!", Toast.LENGTH_LONG).show();
             Log.i(TAG, "Logeo Exitoso!");

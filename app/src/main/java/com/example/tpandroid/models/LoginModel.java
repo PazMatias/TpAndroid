@@ -61,7 +61,6 @@ public class LoginModel implements LoginInterface.Model {
                         String value = PreferencesHelper.LoadValue(context, MetricsTables.LOGINCOUNT,request.getEmail().toString());
                         PreferencesHelper.Save(context,MetricsTables.LOGINCOUNT,request.getEmail().toString(),value);
 
-
                         TokenSingleton tokenSingleton = TokenSingleton.getInstance(response.body().getToken(),response.body().getToken_refresh());
 
                         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();

@@ -9,7 +9,7 @@ public class PreferencesHelper  {
     public static void Save(Context context, String file,String key,String value){
         SharedPreferences preferences = context.getSharedPreferences(file, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        if(!value.equals("0"))
+        if(!value.equals("1"))
             value = String.valueOf(Integer.parseInt(value) + 1);
         editor.putString(key,value);
         editor.commit();

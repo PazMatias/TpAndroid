@@ -27,7 +27,7 @@ public class RegisterEventHelper extends AsyncTask<String, Integer, String> {
     private final int EVENTOK = 200;
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected synchronized String doInBackground(String... strings) {
 
         TokenSingleton tokenSingleton = TokenSingleton.getTokenSingleton();
 
@@ -52,7 +52,7 @@ public class RegisterEventHelper extends AsyncTask<String, Integer, String> {
                 registerEventResponse.setEnv(response.body().getEnv());
                 registerEventResponse.setSuccess(response.body().getSuccess());
                 registerEventResponse.setEvent(response.body().getData());
-                Log.i(TAG,"SE REGISTRO TODO BIEN");
+                Log.i(TAG,"SE REGISTRO TODO BIEN" + strings[2] );
             } else {
                 Log.e(TAG, "Token Vencido");
                 Call<RefreshTokenResponse> callRefreshToken = soaService.refreshToken("Bearer" + tokenSingleton.token_refresh);

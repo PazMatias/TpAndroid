@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    implementation 'com.squareup:seismic:1.0.3'
         // Optional, for RxJava2 adapter
     implementation 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

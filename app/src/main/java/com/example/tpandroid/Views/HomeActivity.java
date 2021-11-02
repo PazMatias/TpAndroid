@@ -27,6 +27,7 @@ import com.example.tpandroid.Views.Fragments.TipsFragment;
 import com.example.tpandroid.helpers.RegisterEventHelper;
 import com.example.tpandroid.helpers.PreferencesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.seismic.ShakeDetector;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener, LinesFragment.RegisterSensor {
 
@@ -34,13 +35,11 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
     public String email;
 
-    private MediaPlayer mPlayer;
     private SensorManager mSensor;
-    private Vibrator mVibrator;
     private BottomNavigationView bottomNavigationView;
 
-    private long lastUpdate;
-    private float last_x = -1.0f, last_y = -1.0f, last_z = -1.0f, x, y, z;
+    private float  x, y, z,acelValue,acelLast,differenceMedian=0f,shake=0.0f;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +49,11 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mPlayer = MediaPlayer.create(this, R.raw.minecraft_eating);
-        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        acelValue = SensorManager.GRAVITY_EARTH;
+        acelLast = SensorManager.GRAVITY_EARTH;
 
 
-        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mPlayer.setVolume(1.0f, 1.0f);
-            }
-        });
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         bottomNavigationView.setOnNavigationItemReselectedListener(bottomReselectedNavMethod);
         Bundle bundle = new Bundle();
@@ -108,16 +102,13 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onStop() {
         unregisterSenser();
-        if (mPlayer != null) {
-            mPlayer.release();
-        }
         super.onStop();
     }
 
     @Override
     public void registerSenser() {
-        boolean done;
-        done = mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+
+        mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 
         Log.i("sensor", "register");
     }
@@ -132,38 +123,27 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        int sensorType = event.sensor.getType();
+        x = event.values[0];
+        y = event.values[1];
+        z = event.values[2];
+        acelLast = acelValue;
+        acelValue = (float) Math.sqrt((double) (x*x + y*y + z*z));
+        float difference = acelValue - acelLast;
+        shake = shake * 0.9f + difference;
+        differenceMedian = (difference + differenceMedian) / 2 ;
+        if(difference < 0.1){
+            if(shake > 25) {
 
-        float[] values = event.values;
 
-        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
-            long curTime = System.currentTimeMillis();
+                Log.i("sensor", "running");
 
-            if ((curTime - lastUpdate) > 100) {
-                long diffTime = (curTime - lastUpdate);
-                lastUpdate = curTime;
-                x = values[0];
-                y = values[1];
-                z = values[2];
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
 
-                last_x = x;
-                last_y = y;
-                last_z = z;
-
-                if (speed > ACC) {
-
-                    Log.i("sensor", "running");
-                    mPlayer.start();
-
-                    Intent intent = new Intent(this, BusDetailActivity.class);
-                    intent.putExtra("email", email);
-                    startActivity(intent);
-                }
-
+                Intent intent = new Intent(this, BusDetailActivity.class);
+                intent.putExtra("email", email);
+                startActivity(intent);
             }
-
         }
+
 
     }
 
@@ -176,4 +156,5 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
     }
+
 }

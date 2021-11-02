@@ -22,21 +22,25 @@
         android:layout_width="137dp"
         android:layout_height="117dp"
         android:layout_marginTop="188dp"
+        android:layout_marginBottom="88dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewBattery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047"
         app:srcCompat="@drawable/battery" />
 
     <TextView
         android:id="@+id/textViewPercentageBattery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
         android:fontFamily="monospace"
         android:gravity="center"
         android:text="100%"
         android:textSize="80dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-16dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

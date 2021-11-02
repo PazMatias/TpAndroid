@@ -20,5 +20,6 @@
     <string name="plate">Patente:</string>
     <string name="plate_value">ABC123</string>
     <string name="cancel_button">Cancelar</string>
+    <string name="powered_by">2021 © Grupo 13</string>
 
 </resources>

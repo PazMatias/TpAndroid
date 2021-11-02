@@ -72,8 +72,8 @@ public class TipsFragment extends Fragment {
         ListView view = (ListView) home.findViewById(R.id.tips_list_view);
         ArrayList<String> tips = new ArrayList<>();
         tips.add("Siempre dejar una fila de distancia entre pasajeros");
-        tips.add("Evita contacto con superficies publicas");
-        tips.add("Mantente puesto el barbijo");
+        tips.add("Evita contacto directo con superficies publicas como las barandas o el boton de solicitud de parada");
+        tips.add("Ten puesto el barbijo durante todo el viaje");
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(home.getContext(),android.R.layout.simple_list_item_1,tips);
         view.setAdapter(arrayAdapter);

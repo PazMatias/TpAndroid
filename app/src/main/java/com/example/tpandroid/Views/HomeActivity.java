@@ -40,7 +40,6 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
@@ -58,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
             }
         });
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        bottomNavigationView.setOnNavigationItemReselectedListener(bottomReselectedNavMethod);
         Bundle bundle = new Bundle();
         bundle.putString("email",email);
         Fragment fragment = new MetricsFragment();
@@ -87,6 +87,13 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
             getSupportFragmentManager().beginTransaction().replace(R.id.tabsContainer,fragment).commit();
             return true;
+        }
+    };
+
+    private BottomNavigationView.OnNavigationItemReselectedListener bottomReselectedNavMethod = new BottomNavigationView.OnNavigationItemReselectedListener(){
+        @Override
+        public void onNavigationItemReselected(@NonNull MenuItem item) {
+
         }
     };
 

@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.tpandroid.R;
 import com.example.tpandroid.Utils.MetricsTables;
@@ -24,11 +25,11 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         setContentView(R.layout.activity_bus_detail);
 
         email = getIntent().getExtras().getString("email");
-
+        Log.i("SAVESTOPS",email);
         String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT,this.email,"0");
         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
         hiloRegistraEvento.execute(getString(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
-        PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,value);
+        PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,String.valueOf(Integer.parseInt(value) + 1));
 
         //mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 

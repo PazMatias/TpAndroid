@@ -123,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
             {
                 Log.i("sensor", "running");
                 mPlayer.start();
-                String value = PreferencesHelper.LoadValue(this,MetricsTables.STOPCOUNT,this.email);
+                String value = PreferencesHelper.LoadValue(this,MetricsTables.STOPCOUNT,this.email,"0");
                 PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,value);
 
                 Intent intent = new Intent(this, BusDetailActivity.class);

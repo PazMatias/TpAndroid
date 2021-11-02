@@ -39,34 +39,18 @@ import android.widget.ListView;
  */
 public class LinesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private static String TAG = RegisterActivity.class.getName();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private boolean selec = false;
     private CheckBox checkBox96ce;
     private CheckBox checkBox96sj;
 
     public LinesFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LinesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static LinesFragment newInstance(String param1, String param2) {
         LinesFragment fragment = new LinesFragment();
         Bundle args = new Bundle();

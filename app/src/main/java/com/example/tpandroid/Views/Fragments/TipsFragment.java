@@ -15,16 +15,11 @@ import com.example.tpandroid.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TipsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TipsFragment extends Fragment {
 
     ListView listView;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -36,15 +31,6 @@ public class TipsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TipsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static TipsFragment newInstance(String param1, String param2) {
         TipsFragment fragment = new TipsFragment();
         Bundle args = new Bundle();

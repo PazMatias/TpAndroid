@@ -158,7 +158,6 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
                     Intent intent = new Intent(this, BusDetailActivity.class);
                     intent.putExtra("email", email);
-//                    intent.putExtra("selectedOption",);
                     startActivity(intent);
                 }
 

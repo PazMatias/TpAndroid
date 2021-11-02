@@ -39,11 +39,15 @@ import android.widget.ListView;
  */
 public class LinesFragment extends Fragment {
 
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private static String TAG = RegisterActivity.class.getName();
 
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     private CheckBox checkBox96ce;
     private CheckBox checkBox96sj;
@@ -51,6 +55,7 @@ public class LinesFragment extends Fragment {
     public LinesFragment() {
     }
 
+    // TODO: Rename and change types and number of parameters
     public static LinesFragment newInstance(String param1, String param2) {
         LinesFragment fragment = new LinesFragment();
         Bundle args = new Bundle();

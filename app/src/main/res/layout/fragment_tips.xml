@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".Views.Fragments.TipsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_tips_fragment" />
+        android:background="@color/yellow"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/tips_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
 </FrameLayout>

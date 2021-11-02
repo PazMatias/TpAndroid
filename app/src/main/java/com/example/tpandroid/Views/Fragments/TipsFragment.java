@@ -7,8 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.tpandroid.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +22,7 @@ import com.example.tpandroid.R;
  */
 public class TipsFragment extends Fragment {
 
+    ListView listView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,12 +61,22 @@ public class TipsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tips, container, false);
+        View home =  inflater.inflate(R.layout.fragment_tips, container, false);
+        ListView view = (ListView) home.findViewById(R.id.tips_list_view);
+        ArrayList<String> tips = new ArrayList<>();
+        tips.add("Siempre dejar una fila de distancia entre pasajeros");
+        tips.add("Evita contacto con superficies publicas");
+        tips.add("Mantente puesto el barbijo");
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(home.getContext(),android.R.layout.simple_list_item_1,tips);
+        view.setAdapter(arrayAdapter);
+        return home;
     }
 }

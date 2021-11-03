@@ -47,12 +47,12 @@ public class RegisterEventHelper extends AsyncTask<String, Integer, String> {
         Call<RegisterEventResponse> callRegisterEvent = soaService.registerEvents("Bearer " + tokenSingleton.token, registerEventRequest);
         try {
             Response<RegisterEventResponse> response = callRegisterEvent.execute();
-            if (response.code() == EVENTOK) {
+            if (response.code() == EVENTCREATED) {
                 RegisterEventResponse registerEventResponse = new RegisterEventResponse();
                 registerEventResponse.setEnv(response.body().getEnv());
                 registerEventResponse.setSuccess(response.body().getSuccess());
                 registerEventResponse.setEvent(response.body().getData());
-                Log.i(TAG,"SE REGISTRO TODO BIEN" + strings[2] );
+                Log.i(TAG,"Se Registro el evento " + strings[1]);
             } else {
                 Log.e(TAG, "Token Vencido");
                 Call<RefreshTokenResponse> callRefreshToken = soaService.refreshToken("Bearer" + tokenSingleton.token_refresh);

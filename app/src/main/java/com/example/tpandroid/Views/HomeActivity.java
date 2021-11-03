@@ -32,8 +32,6 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
     private float  x, y, z;
 
-    private float mLastX=-1.0f, mLastY=-1.0f, mLastZ=-1.0f;
-    private int mShakeCount = 0;
     private long ultimaActualizacion;
 
 
@@ -128,11 +126,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
                 y = values[1];
                 z = values[2];
                 float velocidadCalculada= (float) Math.sqrt((double) (x * x + y * y + z * z));
-                       // Math.abs(x + y + z - mLastX - mLastY - mLastZ) / diffTime * 10000;
 
-                mLastX = x;
-                mLastY = y;
-                mLastZ = z;
                 if (velocidadCalculada > ACC) {
 
                     Log.i("sensor", "running");

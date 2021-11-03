@@ -21,6 +21,7 @@ import com.example.tpandroid.R;
 import com.example.tpandroid.Utils.MetricsTables;
 import com.example.tpandroid.Utils.SonarAlertaColectivo;
 import com.example.tpandroid.Utils.TimerAlarma;
+import com.example.tpandroid.helpers.ConnectionHelper;
 import com.example.tpandroid.helpers.PreferencesHelper;
 import com.example.tpandroid.helpers.RegisterEventHelper;
 import com.example.tpandroid.retrofit.requests.LoginRequest;
@@ -31,7 +32,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     SensorManager mSensorManager;
     Sensor mProximity;
     private String email;
-    private static final int SENSOR_SENSITIVITY = 4;
+    private static final float SENSOR_SENSITIVITY = 0.5f;
     private Vibrator mVibrator;
     private MediaPlayer mPlayer;
     private Button cancelarButton;
@@ -46,11 +47,16 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         cancelarButton = findViewById(R.id.cancelButton);
 
         email = getIntent().getExtras().getString("email");
-        Log.i("SAVESTOPS",email);
-        String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT,this.email,"0");
-        PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,String.valueOf(Integer.parseInt(value) + 1));
-        RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
-        hiloRegistraEvento.execute(getString(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
+        Log.i("SAVESTOPS", email);
+        String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT, this.email, "0");
+        PreferencesHelper.Save(this, MetricsTables.STOPCOUNT, this.email, String.valueOf(Integer.parseInt(value) + 1));
+
+        if (ConnectionHelper.isOnline(this)) {
+            RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
+            hiloRegistraEvento.execute(getString(R.string.url_register_api), "Colectivo Parado", "Se agito el celular para parar un colectivo");
+        }
+        else
+            Log.e("ERROR","No se cuenta con internet para registrar el evento");
 
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -86,10 +92,11 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0]>= -SENSOR_SENSITIVITY && event.values[0] <= event.sensor.getMaximumRange()) {
-                t = new Thread(new SonarAlertaColectivo(mVibrator,mPlayer));
+            Toast.makeText(this, "proximidad" + event.values[0], Toast.LENGTH_SHORT).show();
+            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
+                t = new Thread(new SonarAlertaColectivo(mVibrator, mPlayer));
                 timer = new Timer();
-                timer.schedule(new TimerAlarma(t, timer,cancelarButton), 15*1000);
+                timer.schedule(new TimerAlarma(t, timer, cancelarButton), 15 * 1000);
                 t.start();
                 mSensorManager.unregisterListener(this);
             }
@@ -103,14 +110,14 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cancel_button:
 
-                t.interrupt();
-                timer.cancel();
-                Intent intent = new Intent(this,HomeActivity.class);
+                Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
                 break;
         }
     }
+
+
 }

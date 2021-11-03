@@ -64,7 +64,7 @@ public class LoginModel implements LoginInterface.Model {
                         TokenSingleton tokenSingleton = TokenSingleton.getInstance(response.body().getToken(),response.body().getToken_refresh());
 
                         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
-                        hiloRegistraEvento.execute(uri,"Probando Log","Se ejecuto el hilo que logea jeje");
+                        hiloRegistraEvento.execute(uri,"Logueo de usuario","Login de usuario" +request.getEmail() + "a la aplicacion");
                     }
                     else{
 

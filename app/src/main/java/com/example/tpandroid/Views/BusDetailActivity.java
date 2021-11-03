@@ -36,6 +36,9 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     private MediaPlayer mPlayer;
     private Button cancelarButton;
 
+    private Timer timer;
+    private Thread t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,16 +87,13 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
 
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0]>= -SENSOR_SENSITIVITY && event.values[0] <= event.sensor.getMaximumRange()) {
-                Thread t = new Thread(new SonarAlertaColectivo(mVibrator,mPlayer));
-                Timer timer = new Timer();
-                timer.schedule(new TimerAlarma(t, timer), 30*1000);
+                t = new Thread(new SonarAlertaColectivo(mVibrator,mPlayer));
+                timer = new Timer();
+                timer.schedule(new TimerAlarma(t, timer,cancelarButton), 15*1000);
                 t.start();
                 mSensorManager.unregisterListener(this);
             }
         }
-        else
-            getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-
     }
 
     @Override
@@ -106,6 +106,8 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         switch (v.getId()){
             case R.id.cancel_button:
 
+                t.interrupt();
+                timer.cancel();
                 Intent intent = new Intent(this,HomeActivity.class);
                 startActivity(intent);
                 break;

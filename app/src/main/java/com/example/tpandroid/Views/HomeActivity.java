@@ -4,35 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.text.BoringLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.example.tpandroid.R;
-import com.example.tpandroid.Utils.MetricsTables;
 import com.example.tpandroid.Views.Fragments.LinesFragment;
 import com.example.tpandroid.Views.Fragments.MetricsFragment;
 import com.example.tpandroid.Views.Fragments.TipsFragment;
-import com.example.tpandroid.helpers.RegisterEventHelper;
-import com.example.tpandroid.helpers.PreferencesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.squareup.seismic.ShakeDetector;
 
 public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener, LinesFragment.RegisterSensor {
 
-    private final static int ACC = 15000;
+    private final static int ACC = 20;
 
     public String email;
     private int counter = 0;
@@ -43,7 +34,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
     private float mLastX=-1.0f, mLastY=-1.0f, mLastZ=-1.0f;
     private int mShakeCount = 0;
-    private long lastUpdate;
+    private long ultimaActualizacion;
 
 
     @Override
@@ -128,21 +119,21 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
         float[] values = event.values;
 
-            long curTime = System.currentTimeMillis();
+            long diferenciaDeTiempo = System.currentTimeMillis();
 
-            if ((curTime - lastUpdate) > 100) {
-                long diffTime = (curTime - lastUpdate);
-                lastUpdate = curTime;
+            if ((diferenciaDeTiempo - ultimaActualizacion) > 1000) {
+                long diffTime = (diferenciaDeTiempo - ultimaActualizacion);
+                ultimaActualizacion = diferenciaDeTiempo;
                 x = values[0];
                 y = values[1];
                 z = values[2];
-                float speed = Math.abs(x + y + z - mLastX - mLastY - mLastZ) / diffTime * 10000;
+                float velocidadCalculada= (float) Math.sqrt((double) (x * x + y * y + z * z));
+                       // Math.abs(x + y + z - mLastX - mLastY - mLastZ) / diffTime * 10000;
 
                 mLastX = x;
                 mLastY = y;
                 mLastZ = z;
-                Toast.makeText(this, "Speed " + speed, Toast.LENGTH_SHORT).show();
-                if (speed > ACC) {
+                if (velocidadCalculada > ACC) {
 
                     Log.i("sensor", "running");
                     Intent intent = new Intent(this, BusDetailActivity.class);

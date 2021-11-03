@@ -16,12 +16,12 @@ import android.widget.Toast;
 
 
 import com.example.tpandroid.R;
-import com.example.tpandroid.databinding.ActivityMainBinding;
+import com.example.tpandroid.databinding.PatternActivityBinding;
 import java.util.List;
 
 public class PatternActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private PatternActivityBinding binding;
     PatternLockView patternLockView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class PatternActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = PatternActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 

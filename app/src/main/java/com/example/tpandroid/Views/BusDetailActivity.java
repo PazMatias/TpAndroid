@@ -47,7 +47,7 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         cancelarButton = findViewById(R.id.cancelButton);
 
         email = getIntent().getExtras().getString("email");
-        Log.i("SAVESTOPS", email);
+        Log.i("Save StopCount", email);
         String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT, this.email, "0");
         PreferencesHelper.Save(this, MetricsTables.STOPCOUNT, this.email, String.valueOf(Integer.parseInt(value) + 1));
 
@@ -92,7 +92,6 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            Toast.makeText(this, "proximidad" + event.values[0], Toast.LENGTH_SHORT).show();
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
                 t = new Thread(new SonarAlertaColectivo(mVibrator, mPlayer));
                 timer = new Timer();

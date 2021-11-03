@@ -39,6 +39,7 @@
         android:gravity="center"
         android:text="100%"
         android:textSize="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/batteryImageView"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 

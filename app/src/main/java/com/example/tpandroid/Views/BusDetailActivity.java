@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,7 +14,6 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.tpandroid.R;
 import com.example.tpandroid.Utils.MetricsTables;
@@ -46,11 +44,11 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
         cancelarButton = findViewById(R.id.cancelButton);
 
         email = getIntent().getExtras().getString("email");
-        Log.i("SAVESTOPS",email);
-        String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT,this.email,"0");
-        PreferencesHelper.Save(this, MetricsTables.STOPCOUNT,this.email,String.valueOf(Integer.parseInt(value) + 1));
+        Log.i("Save StopCount", email);
+        String value = PreferencesHelper.LoadValue(this, MetricsTables.STOPCOUNT, this.email, "0");
+        PreferencesHelper.Save(this, MetricsTables.STOPCOUNT, this.email, String.valueOf(Integer.parseInt(value) + 1));
         RegisterEventHelper hiloRegistraEvento = new RegisterEventHelper();
-        hiloRegistraEvento.execute(getString(R.string.url_register_api),"Colectivo Parado","Se agito el celular para parar un colectivo");
+        hiloRegistraEvento.execute(getString(R.string.url_register_api), "Colectivo Parado", "Se agito el celular para parar un colectivo");
 
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -86,10 +84,10 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0]>= -SENSOR_SENSITIVITY && event.values[0] <= event.sensor.getMaximumRange()) {
-                t = new Thread(new SonarAlertaColectivo(mVibrator,mPlayer));
+            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= event.sensor.getMaximumRange()) {
+                t = new Thread(new SonarAlertaColectivo(mVibrator, mPlayer));
                 timer = new Timer();
-                timer.schedule(new TimerAlarma(t, timer,cancelarButton), 15*1000);
+                timer.schedule(new TimerAlarma(t, timer, cancelarButton), 15 * 1000);
                 t.start();
                 mSensorManager.unregisterListener(this);
             }
@@ -103,12 +101,12 @@ public class BusDetailActivity extends AppCompatActivity implements SensorEventL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cancel_button:
 
                 t.interrupt();
                 timer.cancel();
-                Intent intent = new Intent(this,HomeActivity.class);
+                Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
                 break;
         }

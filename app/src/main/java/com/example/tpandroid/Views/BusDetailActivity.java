@@ -83,6 +83,7 @@ public class BusDetailActivity extends AppCompatActivity {
                     if (AlertaService.state) {
                         detenerMusica();
                     }
+                    changeToHomeActivity();
                     break;
 
                 default:
@@ -94,6 +95,14 @@ public class BusDetailActivity extends AppCompatActivity {
     public void detenerMusica() {
         stopService(intent);
         presenter.timer.cancel();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        changeToHomeActivity();
+    }
+    public void changeToHomeActivity(){
         Intent intent2 = new Intent(BusDetailActivity.this, HomeActivity.class);
         intent2.putExtra("email", email);
         startActivity(intent2);

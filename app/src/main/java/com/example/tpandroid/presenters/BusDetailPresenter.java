@@ -56,6 +56,7 @@ public class BusDetailPresenter implements SensorEventListener {
                     @Override
                     public void onFinish() {
                         busDetailView.detenerMusica();
+                        busDetailView.changeToHomeActivity();
                     }
                 }.start();
             }

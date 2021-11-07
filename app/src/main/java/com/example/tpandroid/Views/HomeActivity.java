@@ -93,8 +93,8 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onStop() {
-        unregisterSenser();
         super.onStop();
+        unregisterSenser();
     }
 
     @Override

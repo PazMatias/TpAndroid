@@ -3,6 +3,7 @@ package com.example.tpandroid.Views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,6 +33,8 @@ public class BusDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_detail);
         cancelarButton = findViewById(R.id.cancelButton);
@@ -65,6 +68,10 @@ public class BusDetailActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (AlertaService.state){
+            stopService(intent);
+            presenter.timer.cancel();
+        }
         presenter.unregisterSensor();
     }
 

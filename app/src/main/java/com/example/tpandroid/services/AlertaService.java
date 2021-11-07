@@ -27,7 +27,6 @@ public class AlertaService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i("Service Alerta","ESTOY EN EL SERVICE GIL");
         mPlayer = MediaPlayer.create(this, R.raw.get_over_here);
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

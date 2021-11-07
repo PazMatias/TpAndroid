@@ -19,20 +19,17 @@ import com.example.tpandroid.R;
 import com.example.tpandroid.Views.Fragments.LinesFragment;
 import com.example.tpandroid.Views.Fragments.MetricsFragment;
 import com.example.tpandroid.Views.Fragments.TipsFragment;
+import com.example.tpandroid.presenters.HomePresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener, LinesFragment.RegisterSensor {
+public class HomeActivity extends AppCompatActivity implements  CompoundButton.OnCheckedChangeListener, LinesFragment.RegisterSensor {
 
-    private final static int ACC = 20;
 
     public String email;
-    private int counter = 0;
-    private SensorManager mSensor;
+
     private BottomNavigationView bottomNavigationView;
 
-    private float  x, y, z;
-
-    private long ultimaActualizacion;
+    private HomePresenter presenter;
 
 
     @Override
@@ -42,9 +39,8 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.home_activity);
         email = getIntent().getExtras().getString("email");
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-        mSensor = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-
+        presenter = new HomePresenter(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         bottomNavigationView.setOnNavigationItemReselectedListener(bottomReselectedNavMethod);
@@ -94,55 +90,20 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterSenser();
+        presenter.unregisterSensor();
     }
 
     @Override
     public void registerSenser() {
 
-        mSensor.registerListener((SensorEventListener) this, mSensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
-
+        presenter.registerSensor();
         Log.i("sensor", "register");
     }
 
     @Override
     public void unregisterSenser() {
-        mSensor.unregisterListener((SensorEventListener) this);
+        presenter.unregisterSensor();
         Log.i("sensor", "unregister");
-    }
-
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-
-        float[] values = event.values;
-
-            long diferenciaDeTiempo = System.currentTimeMillis();
-
-            if ((diferenciaDeTiempo - ultimaActualizacion) > 1000) {
-                long diffTime = (diferenciaDeTiempo - ultimaActualizacion);
-                ultimaActualizacion = diferenciaDeTiempo;
-                x = values[0];
-                y = values[1];
-                z = values[2];
-                float velocidadCalculada= (float) Math.sqrt((double) (x * x + y * y + z * z));
-
-                if (velocidadCalculada > ACC) {
-
-                    Log.i("sensor", "running");
-                    Intent intent = new Intent(this, BusDetailActivity.class);
-                    intent.putExtra("email", email);
-                    startActivity(intent);
-                }
-
-            }
-
-    }
-
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     @Override
@@ -150,4 +111,11 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+
+    public void changeToBusDetail(){
+        Log.i("sensor", "running");
+        Intent intent = new Intent(this, BusDetailActivity.class);
+        intent.putExtra("email", email);
+        startActivity(intent);
+    }
 }
